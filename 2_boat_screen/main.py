@@ -6,8 +6,6 @@ from manager import Manager
 from data_mysql import DataMysql
 from flask import jsonify
 from gevent import pywsgi
-
-
 app = Flask(__name__,template_folder="templates")
 app.jinja_env.variable_start_string = '[['
 app.jinja_env.variable_end_string = ']]'
@@ -25,6 +23,14 @@ def update():
         data = eval(request.get_data())
         result = manager.GetJson(int(data['flag']))   #调用接口
     return result
+#更新逸夫楼传感器参数
+@app.route('/update1', methods=['POST'])
+def update1():
+    result1 = {}
+    if request.method == 'POST':
+        data1 = eval(request.get_data())
+        result1 = manager.GetJson1(int(data1['flag']))   #调用接口
+    return result1
 
 #获取前端页面
 @app.route('/', methods=['GET', 'POST'])

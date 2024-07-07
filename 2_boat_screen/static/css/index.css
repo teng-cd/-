@@ -390,7 +390,7 @@ header .showtime {
   line-height: 0.4rem;
   text-align: center;
   font-size: 0.375rem;
-  font-weight: 200;
+  font-weight: 700;
   padding: 3px 3px;
   margin-top: 0.2rem;
   font-family: "Tahoma";
@@ -460,7 +460,8 @@ header .showtime {
 } */
 
 .pingjia {
-  padding-bottom: 0.1rem;
+  padding-bottom: 0.05rem;
+  margin-top: 0.25rem;
 }
 
 .pingjia h3 {
@@ -480,6 +481,29 @@ header .showtime {
 }
 
 .pingjia h1 {
+  height: 0.75rem;
+  color: #fff;
+  line-height: 0.85rem;
+  text-align: center;
+  font-size: 0.6rem;
+  font-weight: 400;
+  font-family: "Tahoma";
+  margin-top: 0.1rem;
+}
+
+.pingjia h1 span {
+  height: 1rem;
+  color: #fc0404;
+  line-height: 1.5rem;
+  text-align: center;
+  font-size: 0.6rem;
+  font-weight: 400;
+  font-family: "Tahoma";
+  margin-top: 0.1rem;
+}
+
+
+.pingjia h3 {
   height: 1rem;
   color: #fff;
   line-height: 1.5rem;
@@ -490,6 +514,8 @@ header .showtime {
   margin-top: 0.2rem;
 }
 
+
+
 .tianqi {
   flex: 2;
   width: 80%;
@@ -498,6 +524,7 @@ header .showtime {
   border-radius: 50px;
   padding-top: 2%;
   padding-bottom: 3%;
+  margin-top: 1rem;
 }
 
 .tianqi h2 {
@@ -795,3 +822,36 @@ header .showtime {
   background: greenyellow;
   content: "";
 }
+
+.box {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: all 1s
+}
+
+.box ul {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  justify-content: space-evenly !important;
+}
+
+.box1 {
+  position: absolute;
+  top: 220%;
+  left: 0;
+  transition: all 1s
+}
+
+.box1 ul {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  justify-content: space-evenly !important;
+}
+
+
+
+
+/* .mainbox .column ul li {
+
+} */

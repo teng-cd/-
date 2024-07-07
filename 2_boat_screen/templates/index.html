@@ -27,7 +27,7 @@
     </div>
     <!-- 水质数据显示 -->
     <div class="protect2" id="protect2">
-        <header>
+        <header style="height: 1.2rem;">
             <h1>水环境在线监测</h1>
             <div class="showtime" id="water"></div>
         </header>
@@ -50,229 +50,59 @@
                         </div>
                     </div>
                 </div>
-                <div v-for="i in arr1" :id="gernerateId(i)" class="column1">
-                    <div v-for="j in arr2" class="panel">
-                        <h2 v-if="j*3+i == 0"> DO<span>（溶解氧）</span></h2>
-                        <h2 v-else-if="j*3+i == 1">NH3-N<span>（氨氮）</span></h2>
-                        <h2 v-else-if="j*3+i == 2"> PM2.5<span>（细颗粒物） </span></h2>
-                        <h2 v-else-if="j*3+i == 3"> Cd<span>（镉离子）</span></h2>
-                        <h2 v-else-if="j*3+i == 4"> Cyanos<span>（蓝绿藻）</span></h2>
-                        <h2 v-else-if="j*3+i == 5"> PM10<span>（可吸入颗粒物） </span></h2>
-                        <h2 v-else-if="j*3+i == 6"> EC<span>（电导率）</span></h2>
-                        <h2 v-else-if="j*3+i == 7"> Cu<span>（铜离子）</span></h2>
-                        <h2 v-else-if="j*3+i == 8"> CO<sub>2</sub><span>（二氧化碳） </span> </h2>
-                        <h2 v-else-if="j*3+i == 9"> Chl<span>（叶绿素）</span> </h2>
-                        <h2 v-else-if="j*3+i == 10"> 水温 </h2>
-                        <h2 v-else-if="j*3+i == 11"> 水深</h2>
-                        <!-- 测试调试部分-->
-                        <!-- 溶解氧 -->
-                        <div v-if="j*3+i==0" class="chart">
-                            <h3 v-if="sensor_data[j*3 + i]>=6" style="color:rgba(0, 190, 0, 0.7)">
-                                实际值：{{ sensor_data[j*3 + i] }}{{ unit[j*3 + i]
-                                }}</h3>
-                            <h3 v-else-if="sensor_data[j*3 + i]>=5 && sensor_data[j*3 + i]<=6"
-                                style="color:rgba(255, 240, 0, 0.7)">实际值：{{ sensor_data[j*3 + i] }}{{ unit[j*3 + i]
-                                }}</h3>
-                            <h3 v-else-if="sensor_data[j*3 + i]>=3 && sensor_data[j*3 + i]<=5"
-                                style="color:rgba(255, 130, 0, 0.7)">实际值：{{ sensor_data[j*3 + i] }}{{ unit[j*3 + i]
-                                }}</h3>
-                            <h3 v-else-if="sensor_data[j*3 + i]>=0 && sensor_data[j*3 + i]<=3"
-                                style="color:rgba(255, 0, 0, 0.7)">实际值：{{ sensor_data[j*3 + i] }}{{ unit[j*3 + i]
-                                }}</h3>
-                            <h3 v-else>实际值：{{
-                                sensor_data[j*3 + i] }}{{ unit[j*3 + i]
-                                }}</h3>
-                            <h4> 标准值：{{ std[j*3 + i] }}{{ unit[j*3 + i] }}</h4>
+                <!-- 数据展示 -->
+                <div>
+                    <div class="box" id="box">
+                        <h2
+                            style="text-align: center;color: white;padding-bottom: 0.1rem;font-size: 0.425rem; margin-top: 0.1rem;">
+                            水质数据
+                        </h2>
+                        <div>
+                            <ul>
+                                <li v-for="(item, index) in sensor_data">
+                                    <div class="panel" style="padding: 0;height: 2.5rem;">
+                                        <h2 ref="dealsub" style="height: 0.5rem;line-height: 0.5rem;font-size: 0.4rem;">
+                                            {{
+                                            objList[index].symbol }}<span>{{
+                                                objList[index].name }}</span></h2>
+                                        <div class="chart" style="height: 1.5rem;width: 4.5rem;  margin-top: 0.1rem;">
+                                            <h3 ref="level"
+                                                style="height: 0.3rem;line-height: 0.3rem;font-size: 0.35rem;  margin-top: 0.3rem;">
+                                                实际值：{{item }}{{ unit[index]}}</h3>
+                                            <h4 style="font-size: 0.35rem;" ref="zxc"> 标准值：{{ std[index] }}{{unit[index]
+                                                }}</h4>
+                                        </div>
+                                        <div class="panel-footer"></div>
+                                    </div>
+                                </li>
+                            </ul>
                         </div>
-                        <!-- 氨氮 -->
-                        <div v-if="j*3+i==1" class="chart">
-                            <h3 v-if="sensor_data[j*3 + i]>=0 && sensor_data[j*3 + i]<1.5"
-                                style="color:rgba(0, 190, 0, 0.7)">
-                                实际值：{{ sensor_data[j*3 + i] }}{{ unit[j*3 + i]
-                                }}</h3>
-                            <h3 v-else-if="sensor_data[j*3 + i]>=1.5 && sensor_data[j*3 + i]<10000"
-                                style="color:rgba(255, 0, 0, 0.7)">实际值：{{ sensor_data[j*3 + i] }}{{ unit[j*3 + i]
-                                }}</h3>
-                            <h3 v-else>实际值：{{
-                                sensor_data[j*3 + i] }}{{ unit[j*3 + i]
-                                }}</h3>
-                            <h4> 标准值：{{ std[j*3 + i] }}{{ unit[j*3 + i] }}</h4>
+                    </div>
+                    <div class="box1" id="box1">
+                        <h2
+                            style="text-align: center;color: white;padding-bottom: 0.1rem;font-size: 0.425rem; margin-top: 0.1rem;">
+                            气象数据
+                        </h2>
+                        <div>
+                            <ul>
+                                <li v-for="(item1, index1) in sensor_data1">
+                                    <div class="panel" style="padding: 0;height: 2.5rem;">
+                                        <h2 ref="dealsub1"
+                                            style="height: 0.5rem;line-height: 0.5rem;font-size: 0.4rem;">
+                                            {{objList1[index1].symbol }}<span>{{objList1[index1].name }}</span></h2>
+                                        <div class="chart" style="height: 1.5rem;width: 4.5rem;  margin-top: 0.1rem;">
+                                            <h3 ref="level1"
+                                                style="height: 0.3rem;line-height: 0.3rem;font-size: 0.35rem;  margin-top: 0.3rem;">
+                                                实际值：{{item1 }}{{ unit1[index1]}}</h3>
+                                            <h4 style="font-size: 0.35rem;" ref="zxc1"> 标准值：{{ std1[index1]
+                                                }}{{unit1[index1] }}
+                                            </h4>
+                                        </div>
+                                        <div class="panel-footer"></div>
+                                    </div>
+                                </li>
+                            </ul>
                         </div>
-                        <!-- PM2.5 -->
-                        <div v-if="j*3+i==2" class="chart">
-                            <h3 v-if="sensor_data[j*3 + i]>=0 && sensor_data[j*3 + i]<35"
-                                style="color:rgba(0, 190, 0, 0.7)">
-                                实际值：{{ sensor_data[j*3 + i] }}{{ unit[j*3 + i]
-                                }}<sup>3</sup></h3>
-                            <h3 v-else-if="sensor_data[j*3 + i]>=35 && sensor_data[j*3 + i]<75"
-                                style="color:rgba(255, 240, 0, 0.7)">实际值：{{ sensor_data[j*3 + i] }}{{ unit[j*3 + i]
-                                }}<sup>3</sup></h3>
-                            <h3 v-else-if="sensor_data[j*3 + i]>=75 && sensor_data[j*3 + i]<115"
-                                style="color:rgba(255, 130, 0, 0.7)">实际值：{{ sensor_data[j*3 + i] }}{{ unit[j*3 + i]
-                                }}<sup>3</sup></h3>
-                            <h3 v-else-if="sensor_data[j*3 + i]>=115 && sensor_data[j*3 + i]<150"
-                                style="color:rgba(255, 0, 0, 0.7)">实际值：{{ sensor_data[j*3 + i] }}{{ unit[j*3 + i]
-                                }}<sup>3</sup></h3>
-                            <h3 v-else-if="sensor_data[j*3 + i]>=150 && sensor_data[j*3 + i]<250"
-                                style="color:rgba(165, 15, 75, 0.7)">实际值：{{ sensor_data[j*3 + i] }}{{ unit[j*3 + i]
-                                }}<sup>3</sup></h3>
-                            <h3 v-else-if="sensor_data[j*3 + i]>=250 && sensor_data[j*3 + i]<500"
-                                style="color:rgba(135, 15, 35, 0.7)">实际值：{{
-                                sensor_data[j*3 + i] }}{{ unit[j*3 + i]
-                                }}<sup>3</sup></h3>
-                            <h3 v-else>实际值：{{
-                                sensor_data[j*3 + i] }}{{ unit[j*3 + i]
-                                }}<sup>3</sup></h3>
-                            <h4> 标准值：{{ std[j*3 + i] }}{{ unit[j*3 + i] }}<sup>3</sup></h4>
-                        </div>
-                        <!-- 镉离子 -->
-                        <div v-if="j*3+i==3" class="chart">
-                            <h3 v-if="sensor_data[j*3 + i]>=0 && sensor_data[j*3 + i]<=10"
-                                style="color:rgba(0, 190, 0, 0.7)">
-                                实际值：{{ sensor_data[j*3 + i] }}{{ unit[j*3 + i]
-                                }}</h3>
-                            <h3 v-else-if="sensor_data[j*3 + i]>10 && sensor_data[j*3 + i]<100"
-                                style="color:rgba(255, 0, 0, 0.7)">实际值：{{ sensor_data[j*3 + i] }}{{ unit[j*3 + i]
-                                }}</h3>
-                            <h3 v-else>实际值：{{
-                                sensor_data[j*3 + i] }}{{ unit[j*3 + i]
-                                }}</h3>
-                            <h4> 标准值：{{ std[j*3 + i] }}{{ unit[j*3 + i] }}</h4>
-                        </div>
-                        <!-- 蓝绿藻 -->
-                        <div v-if="j*3+i==4" class="chart">
-                            <h3 v-if="sensor_data[j*3 + i]>=0 && sensor_data[j*3 + i]<16"
-                                style="color:rgba(0, 190, 0, 0.7)">
-                                实际值：{{ sensor_data[j*3 + i] }}{{ unit[j*3 + i]
-                                }}</h3>
-                            <h3 v-else-if="sensor_data[j*3 + i]>=16 && sensor_data[j*3 + i]<100"
-                                style="color:rgba(255, 0, 0, 0.7)">实际值：{{ sensor_data[j*3 + i] }}{{ unit[j*3 + i]
-                                }}</h3>
-                            <h3 v-else>实际值：{{
-                                sensor_data[j*3 + i] }}{{ unit[j*3 + i]
-                                }}</h3>
-                            <h4> 标准值：{{ std[j*3 + i] }}{{ unit[j*3 + i] }}</h4>
-                        </div>
-                        <!-- PM10 -->
-                        <div v-if="j*3+i==5" class="chart">
-                            <h3 v-if="sensor_data[j*3 + i]>=0 && sensor_data[j*3 + i]<50"
-                                style="color:rgba(0, 190, 0, 0.7)">
-                                实际值：{{ sensor_data[j*3 + i] }}{{ unit[j*3 + i]
-                                }}<sup>3</sup></h3>
-                            <h3 v-else-if="sensor_data[j*3 + i]>=50 && sensor_data[j*3 + i]<150"
-                                style="color:rgba(255, 240, 0, 0.7)">实际值：{{ sensor_data[j*3 + i] }}{{ unit[j*3 + i]
-                                }}<sup>3</sup></h3>
-                            <h3 v-else-if="sensor_data[j*3 + i]>=150 && sensor_data[j*3 + i]<250"
-                                style="color:rgba(255, 130, 0, 0.7)">实际值：{{ sensor_data[j*3 + i] }}{{ unit[j*3 + i]
-                                }}<sup>3</sup></h3>
-                            <h3 v-else-if="sensor_data[j*3 + i]>=250 && sensor_data[j*3 + i]<350"
-                                style="color:rgba(255, 0, 0, 0.7)">实际值：{{ sensor_data[j*3 + i] }}{{ unit[j*3 + i]
-                                }}<sup>3</sup></h3>
-                            <h3 v-else-if="sensor_data[j*3 + i]>=350 && sensor_data[j*3 + i]<420"
-                                style="color:rgba(165, 15, 75, 0.7)">实际值：{{ sensor_data[j*3 + i] }}{{ unit[j*3 + i]
-                                }}<sup>3</sup></h3>
-                            <h3 v-else-if="sensor_data[j*3 + i]>=420 && sensor_data[j*3+i]<600 "
-                                style="color:rgba(135, 15, 35, 0.7)">实际值：{{
-                                sensor_data[j*3 + i] }}{{ unit[j*3 + i]
-                                }}<sup>3</sup></h3>
-                            <h3 v-else>实际值：{{
-                                sensor_data[j*3 + i] }}{{ unit[j*3 + i]
-                                }}<sup>3</sup></h3>
-                            <h4> 标准值：{{ std[j*3 + i] }}{{ unit[j*3 + i] }}<sup>3</sup></h4>
-                        </div>
-                        <!-- 电导率-->
-                        <div v-if="j*3+i==6" class="chart">
-                            <h3 v-if="sensor_data[j*3 + i]>=0 && sensor_data[j*3 + i]<500"
-                                style="color:rgba(0, 190, 0, 0.7)">
-                                实际值：{{ sensor_data[j*3 + i] }}{{ unit[j*3 + i]
-                                }}</h3>
-                            <h3 v-else-if="sensor_data[j*3 + i]>=500 && sensor_data[j*3 + i]<1500"
-                                style="color:rgba(255, 0, 0, 0.7)">实际值：{{ sensor_data[j*3 + i] }}{{ unit[j*3 + i]
-                                }}<sup>3</sup></h3>
-                            <h3 v-else>实际值：{{
-                                sensor_data[j*3 + i] }}{{ unit[j*3 + i]
-                                }}</h3>
-                            <h4> 标准值：{{ std[j*3 + i] }}{{ unit[j*3 + i] }}</h4>
-                        </div>
-                        <!-- 铜离子 -->
-                        <div v-if="j*3+i==7" class="chart">
-                            <h3 v-if="sensor_data[j*3 + i]>=0 && sensor_data[j*3 + i]<1000"
-                                style="color:rgba(0, 190, 0, 0.7)">实际值：{{ sensor_data[j*3 + i] }}{{ unit[j*3 + i]
-                                }}</h3>
-                            <h3 v-else-if="sensor_data[j*3 + i]>=1000 && sensor_data[j*3 + i]<10000"
-                                style="color:rgba(255, 0, 0, 0.7)">实际值：{{ sensor_data[j*3 + i] }}{{ unit[j*3 + i]
-                                }}</h3>
-                            <h3 v-else>实际值：{{
-                                sensor_data[j*3 + i] }}{{ unit[j*3 + i]
-                                }}</h3>
-                            <h4> 标准值：{{ std[j*3 + i] }}{{ unit[j*3 + i] }}</h4>
-                        </div>
-                        <!-- CO2 -->
-                        <div v-if="j*3+i==8" class="chart">
-                            <h3 v-if="sensor_data[j*3 + i]>=0 && sensor_data[j*3 + i]<600"
-                                style="color:rgba(0, 190, 0, 0.7)">实际值：{{ sensor_data[j*3 + i] }}{{ unit[j*3 + i]
-                                }}</h3>
-                            <h3 v-else-if="sensor_data[j*3 + i]>=600 && sensor_data[j*3 + i]<1000"
-                                style="color:rgba(255, 240, 0, 0.7)">实际值：{{ sensor_data[j*3 + i] }}{{ unit[j*3 + i]
-                                }}</h3>
-                            <h3 v-else-if="sensor_data[j*3 + i]>=1000 && sensor_data[j*3 + i]<2000"
-                                style="color:rgba(255, 130, 0, 0.7)">实际值：{{ sensor_data[j*3 + i] }}{{ unit[j*3 + i]
-                                }}</h3>
-                            <h3 v-else-if="sensor_data[j*3 + i]>=2000 && sensor_data[j*3 + i]<10000"
-                                style="color:rgba(255, 0, 0, 0.7)">实际值：{{ sensor_data[j*3 + i] }}{{ unit[j*3 + i]
-                                }}</h3>
-                            <h3 v-else>实际值：{{
-                                sensor_data[j*3 + i] }}{{ unit[j*3 + i]
-                                }}</h3>
-                            <h4> 标准值：{{ std[j*3 + i] }}{{ unit[j*3 + i] }}</h4>
-                        </div>
-                        <!-- 叶绿素 -->
-                        <div v-if="j*3+i==9" class="chart">
-                            <h3 v-if="sensor_data[j*3 + i]>=0 && sensor_data[j*3 + i]<50"
-                                style="color:rgba(0, 190, 0, 0.7)">
-                                实际值：{{ sensor_data[j*3 + i] }}{{ unit[j*3 + i]
-                                }}</h3>
-                            <h3 v-else-if="sensor_data[j*3 + i]>=50 && sensor_data[j*3 + i]<100"
-                                style="color:rgba(255, 240, 0, 0.7)">实际值：{{ sensor_data[j*3 + i] }}{{ unit[j*3 + i]
-                                }}</h3>
-                            <h3 v-else-if="sensor_data[j*3 + i]>=100 && sensor_data[j*3 + i]<400"
-                                style="color:rgba(255, 0, 0, 0.7)">实际值：{{ sensor_data[j*3 + i] }}{{ unit[j*3 + i]
-                                }}</h3>
-                            <h3 v-else>实际值：{{
-                                sensor_data[j*3 + i] }}{{ unit[j*3 + i]
-                                }}</h3>
-                            <h4> 标准值：{{ std[j*3 + i] }}{{ unit[j*3 + i] }}</h4>
-                        </div>
-                        <!-- 水温 -->
-                        <div v-if="j*3+i==10" class="chart">
-                            <h3 v-if="sensor_data[j*3 + i]>=0 && sensor_data[j*3 + i]<25"
-                                style="color:rgba(0, 190, 0, 0.7)">
-                                实际值：{{ sensor_data[j*3 + i] }}{{ unit[j*3 + i]
-                                }}</h3>
-                            <h3 v-else-if="sensor_data[j*3 + i]>=25 && sensor_data[j*3 + i]<30"
-                                style="color:rgba(255, 240, 0, 0.7)">实际值：{{ sensor_data[j*3 + i] }}{{ unit[j*3 + i]
-                                }}</h3>
-                            <h3 v-else-if="sensor_data[j*3 + i]>=30 && sensor_data[j*3 + i]<35"
-                                style="color:rgba(255, 130, 0, 0.7)">实际值：{{ sensor_data[j*3 + i] }}{{ unit[j*3 + i]
-                                }}</h3>
-                            <h3 v-else-if="sensor_data[j*3 + i]>=35 && sensor_data[j*3 + i]<100"
-                                style="color:rgba(255, 0, 0, 0.7)">实际值：{{ sensor_data[j*3 + i] }}{{ unit[j*3 + i]
-                                }}</h3>
-                            <h3 v-else>实际值：{{
-                                sensor_data[j*3 + i] }}{{ unit[j*3 + i]
-                                }}</h3>
-                            <h4> 标准值：{{ std[j*3 + i] }}{{ unit[j*3 + i] }}</h4>
-                        </div>
-                        <!-- 水深 -->
-                        <div v-if="j*3+i==11" class="chart">
-                            <h3 v-if="sensor_data[j*3 + i]==-1" style="position:relative; top:20px;">
-                                实际值：{{ sensor_data[j*3 + i] }}{{ unit[j*3 + i]
-                                }}</h3>
-                            <h3 v-else style="position:relative; top:20px;color:rgba(0, 190, 0, 0.7);">实际值：{{
-                                sensor_data[j*3 + i] }}{{ unit[j*3 + i]
-                                }}</h3>
-                        </div>
-                        <div class="panel-footer"></div>
                     </div>
                 </div>
             </div>
@@ -281,8 +111,16 @@
                 <!-- 评价模块 -->
                 <div class="row">
                     <div class="pingjia">
-                        <h1>三峡库区：云阳流域</h1>
-                        <h1>测控范围：6532平方公里测控</h1>
+                        <div class="pingjia">
+                            <h1 style="font-size: 0.6rem; margin-top: 0.01rem; ">船号：9001</h1>
+                            <h1 style="font-size: 0.6rem; margin-top: 0.01rem; ">三峡库区：云阳流域</h1>
+                            <h1 v-if="state_data[0]==0" style="font-size: 0.6rem; margin-top: 0.01rem; ">航行状态：船在港</h1>
+                            <h1 v-else style="font-size: 0.6rem; margin-top: 0.01rem; ">航行状态：航行中
+                            </h1>
+                            <h1 style="font-size: 0.6rem; margin-top: 0.01rem;">测控范围：6532平方公里测控
+                            </h1>
+                        </div>
+
                     </div>
                 </div>
                 <!-- tips模块 -->
@@ -302,6 +140,7 @@
                     <div class="kepu1" id="kepu1">
                     </div>
                 </div>
+            </div>
         </section>
     </div>
     <!-- 屏幕保护大气 -->
@@ -331,6 +170,7 @@
                         </div>
                     </div>
                 </div>
+                <!-- :key -->
                 <div v-for="i in arr11" key="gernerateId(i)" class="column1">
                     <div v-for="j in arr22" key="gernerateId(j)" class="panel">
                         <h2 v-if="j*3+i == 0"> PM1<span>（超细颗粒物）</span></h2>
@@ -541,7 +381,7 @@
                         <!-- 湿度 -->
                         <div v-if="j*3+i==8" class="chart">
 
-                            
+
                             <h3> 实际值：{{ sensor_data[j*3 + i] }}{{ unit2[j*3 + i] }}</h3>
                             <h4> 标准值：{{ std2[j*3 + i] }}{{ unit2[j*3 + i] }}</h4>
                         </div>
@@ -750,6 +590,7 @@
                     player = null;
                 }
 
+                // 是否支持FLV格式视频
                 if (flvjs.isSupported()) {
 
                     video_start(videoDom1, player1, video_id_1, video_name_1, lastDecodedFrames_1);
@@ -792,11 +633,44 @@
                 arr22: [0, 1, 2, 3],
                 arr3: [0, 1, 2, 3, 4, 5],
                 arr4: [0, 1, 2, 3, 4],
+                objList: [
+                    { symbol: 'DO', name: '（溶解氧）' },
+                    { symbol: 'NH3-N', name: '（氨氮）' },
+                    { symbol: 'Cd', name: '（镉离子）' },
+                    { symbol: 'Cyanos', name: '（蓝绿藻）' },
+                    { symbol: 'EC', name: '（电导率）' },
+                    { symbol: 'Cu', name: '（铜离子）' },
+                    { symbol: 'Chl', name: '（叶绿素）' },
+                    { symbol: 'TDS', name: '（总溶解固体）' },
+                    { symbol: 'COD', name: '（化学需氧量）' },
+                    { symbol: 'Turb', name: '（浊度）' },
+                    { symbol: '水温', name: '' },
+                    { symbol: '水深', name: '' },
+
+                ],
+                objList1: [
+                    { symbol: 'WD', name: '（风向）' },
+                    { symbol: 'WS', name: '（风速）' },
+                    { symbol: 'PM1', name: '（微小颗粒物）' },
+                    { symbol: 'RR', name: '（雨量）' },
+                    { symbol: 'SR', name: '（光照）' },
+                    { symbol: 'PM2.5', name: '（细颗粒物）' },
+                    { symbol: 'P', name: '（气压）' },
+                    { symbol: 'SPL', name: '（噪声）' },
+                    { symbol: 'PM10', name: '（可吸入颗粒物）' },
+                    { symbol: 'T', name: '（气温）' },
+                    { symbol: 'RH', name: '（湿度）' },
+                    { symbol: 'CO2', name: '（二氧化碳）' },
+                ],
                 title_aqi: ["优", "良", "轻度污染", "中度污染", "重度污染", "严重污染"],
                 title: ["pm2.5", 'pm10', 'SO2', 'CO', 'NO2', "O3", "O2", "CO2", "CH4", "H2S", "湿度", "温度"],
-                std: [">6", "<0.5", "<75", "<10", "<16", "<150", "<1000", "<1000", "<1000", "<100", "常温25", "<25"],
-                unit: ["mg/L", "mg/L", "μg/m", "μg/L", "万cells/mL", "μg/m", "μS/cm", "μg/L", "ppm", "μg/L", "°C", "m"],
+                std: [">6", "<0.5", "<10", "<16", "<1000", "<1000", "<100", "<900", "<100", "<3", "常温25", "<25"],
+                std1: [">6", "<5.4", "<25", "<25", "<100", "<75", "=1013.25", "<60", "<150", "常温25", "<70", "<1000"],
+                unit: ["mg/L", "mg/L", "μg/L", "万cells/mL", "μS/cm", "μg/L", "μg/L", "mg/L", "mg/L", "NTU", "℃", "m"],
+                unit1: ["°", "m/s", "μg/m³", "mm", "hlux", "μg/m³", "hPa", "dB", "μg/m³", "℃", "%RH", "ppm"],
                 sensor_data: [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
+                sensor_data1: [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
+                state_data: [-1],
                 main_data: ["优", "", "", "", ""],
                 dict: {
                     'co': "主要污染物（一氧化碳）",
@@ -807,7 +681,243 @@
                     'pm25': "主要污染物（细颗粒物）",
                 },
             },
+            watch: {
+                sensor_data: {
+                    deep: true,
+                    immediate: true,
+                    handle() {
+                        this.levelColor()
+                    }
+                },
+                sensor_data1: {
+                    deep: true,
+                    immediate: true,
+                    handle() {
+                        this.levelColor1()
+                    }
+                },
+                // state_data: {
+                //     deep: true,
+                //     immediate: true,
+                //     handle(newValue) {
+                //         this.state_data[0] = newValue
+                //     }
+                // }
+            },
             methods: {
+                levelColor() {
+                    const h3s = this.$refs.level
+                    const h2s = this.$refs.dealsub
+                    const h4s = this.$refs.zxc
+                    // console.log(h3s)
+                    for (let i = 0; i < this.objList.length; i++) {
+                        //水质数据
+                        // DO
+                        if (i == 0) {
+                            console.log(h3s[i])
+                            if (this.sensor_data[i] >= 6) h3s[i].style.color = 'rgba(0, 190, 0, 0.7)'
+                            else if (this.sensor_data[i] >= 5 && this.sensor_data[i] < 6) h3s[i].style.color = 'rgba(255, 240, 0, 0.7)'
+                            else if (this.sensor_data[i] >= 3 && this.sensor_data[i] < 5) h3s[i].style.color = 'rgba(255, 130, 0, 0.7)'
+                            else if (this.sensor_data[i] >= 0 && this.sensor_data[i] < 3) h3s[i].style.color = 'rgba(255, 0, 0, 0.7)'
+                        }
+                        // NH3-N
+                        if (i == 1) {
+                            console.log(h3s[i])
+                            h2s[i].innerHTML = `NH<sub>3</sub>-N<span>${this.objList[i].name}</span>`
+                            if (this.sensor_data[i] >= 0 && this.sensor_data[i] < 0.5) h3s[i].style.color = 'rgba(0, 190, 0, 0.7)'
+                            else if (this.sensor_data[i] >= 0.5 && this.sensor_data[i] < 10000) h3s[i].style.color = 'rgba(255, 0, 0, 0.7)'
+                        }
+                        // Cd
+                        if (i == 2) {
+                            console.log(h3s[i])
+                            if (this.sensor_data[i] >= 0 && this.sensor_data[i] < 10) h3s[i].style.color = 'rgba(0, 190, 0, 0.7)'
+                            else if (this.sensor_data[i] >= 10 && this.sensor_data[i] < 100) h3s[i].style.color = 'rgba(255, 0, 0, 0.7)'
+                        }
+                        // Cyanos
+                        if (i == 3) {
+                            console.log(h3s[i])
+                            if (this.sensor_data[i] >= 0 && this.sensor_data[i] < 16) h3s[i].style.color = 'rgba(0, 190, 0, 0.7)'
+                            else if (this.sensor_data[i] >= 16 && this.sensor_data[i] < 100) h3s[i].style.color = 'rgba(255, 0, 0, 0.7)'
+                        }
+                        // 电导率
+                        if (i == 4) {
+                            console.log(h3s[i])
+                            if (this.sensor_data[i] >= 0 && this.sensor_data[i] < 1000) h3s[i].style.color = 'rgba(0, 190, 0, 0.7)'
+                            else if (this.sensor_data[i] >= 1000 && this.sensor_data[i] < 1500) h3s[i].style.color = 'rgba(255, 0, 0, 0.7)'
+                        }
+                        // 铜离子
+                        if (i == 5) {
+                            console.log(h3s[i])
+                            if (this.sensor_data[i] >= 0 && this.sensor_data[i] < 1000) h3s[i].style.color = 'rgba(0, 190, 0, 0.7)'
+                            else if (this.sensor_data[i] >= 1000 && this.sensor_data[i] < 10000) h3s[i].style.color = 'rgba(255, 0, 0, 0.7)'
+                        }
+                        // 叶绿素
+                        if (i == 6) {
+                            console.log(h3s[i])
+                            if (this.sensor_data[i] >= 0 && this.sensor_data[i] < 50) h3s[i].style.color = 'rgba(0, 190, 0, 0.7)'
+                            else if (this.sensor_data[i] >= 50 && this.sensor_data[i] < 100) h3s[i].style.color = 'rgba(255, 240, 0, 0.7)'
+                            else if (this.sensor_data[i] >= 100 && this.sensor_data[i] < 400) h3s[i].style.color = 'rgba(255, 0, 0, 0.7)'
+                        }
+                        // TDS
+                        if (i == 7) {
+                            console.log(h3s[i])
+                            if (this.sensor_data[i] >= 0 && this.sensor_data[i] <= 300) h3s[i].style.color = 'rgba(0, 190, 0, 0.7)'
+                            else if (this.sensor_data[i] > 300 && this.sensor_data[i] <= 600) h3s[i].style.color = 'rgba(255, 240, 0, 0.7)'
+                            else if (this.sensor_data[i] > 600 && this.sensor_data[i] <= 900) h3s[i].style.color = 'rgba(255, 130, 0, 0.7)'
+                            else if (this.sensor_data[i] > 900) h3s[i].style.color = 'rgba(255, 0, 0, 0.7)'
+                        }
+                        // COD
+                        if (i == 8) {
+                            console.log(h3s[i])
+                            if (this.sensor_data[i] >= 0 && this.sensor_data[i] < 30) h3s[i].style.color = 'rgba(0, 190, 0, 0.7)'
+                            else if (this.sensor_data[i] >= 30 && this.sensor_data[i] < 100) h3s[i].style.color = 'rgba(255, 240, 0, 0.7)'
+                            else if (this.sensor_data[i] >= 100 && this.sensor_data[i] < 200) h3s[i].style.color = 'rgba(255, 130, 0, 0.7)'
+                            else if (this.sensor_data[i] >= 200 && this.sensor_data[i] < 300) h3s[i].style.color = 'rgba(255, 0, 0, 0.7)'
+                            else if (this.sensor_data[i] >= 300) h3s[i].style.color = 'rgba(165, 15, 75, 0.7)'
+                        }
+                        // 浊度
+                        if (i == 9) {
+                            console.log(h3s[i])
+                            if (this.sensor_data[i] >= 0 && this.sensor_data[i] <= 2) h3s[i].style.color = 'rgba(0, 190, 0, 0.7)'
+                            else if (this.sensor_data[i] > 2 && this.sensor_data[i] <= 3) h3s[i].style.color = 'rgba(255, 240, 0, 0.7)'
+                            else if (this.sensor_data[i] > 3 && this.sensor_data[i] <= 5) h3s[i].style.color = 'rgba(255, 130, 0, 0.7)'
+                            else if (this.sensor_data[i] > 5) h3s[i].style.color = 'rgba(255, 0, 0, 0.7)'
+                        }
+                        // 水温
+                        if (i == 10) {
+                            console.log(h3s[i])
+                            if (this.sensor_data[i] >= 0 && this.sensor_data[i] < 25) h3s[i].style.color = 'rgba(0, 190, 0, 0.7)'
+                            else if (this.sensor_data[i] >= 25 && this.sensor_data[i] < 30) h3s[i].style.color = 'rgba(255, 240, 0, 0.7)'
+                            else if (this.sensor_data[i] >= 30 && this.sensor_data[i] < 35) h3s[i].style.color = 'rgba(255, 130, 0, 0.7)'
+                            else if (this.sensor_data[i] >= 35 && this.sensor_data[i] < 100) h3s[i].style.color = 'rgba(255, 0, 0, 0.7)'
+                        }
+                        // 水深
+                        if (i == 11) {
+                            console.log(h3s[i])
+                            if (this.sensor_data[i] == -1) h4s[i].style.display = 'none', h3s[i].style.position = 'relative', h3s[i].style.top = '20px'
+                            else h3s[i].style.color = 'rgba(0, 190, 0, 0.7)', h4s[i].style.display = 'none', h3s[i].style.position = 'relative', h3s[i].style.top = '20px'
+                        }
+
+                    }
+
+
+                },
+                levelColor1() {
+                    const h3s = this.$refs.level1
+                    const h2s = this.$refs.dealsub1
+                    const h4s = this.$refs.zxc1
+                    // 定义一个函数，用于根据风向数值获取风向名称
+                    function getWindDirection(angle) {
+                        if (angle >= 337.5 || angle < 22.5) return '北风';
+                        else if (angle >= 22.5 && angle < 67.5) return '东北风';
+                        else if (angle >= 67.5 && angle < 112.5) return '东风';
+                        else if (angle >= 112.5 && angle < 157.5) return '东南风';
+                        else if (angle >= 157.5 && angle < 202.5) return '南风';
+                        else if (angle >= 202.5 && angle < 247.5) return '西南风';
+                        else if (angle >= 247.5 && angle < 292.5) return '西风';
+                        else if (angle >= 292.5 && angle < 337.5) return '西北风';
+                    }
+
+                    for (let i = 0; i < this.objList1.length; i++) {
+                        //气象数据
+                        // 风向
+                        if (i == 0) {
+                            console.log(h3s[i])
+
+
+                            // h3s[i].style.position = 'relative'; h3s[i].style.top = '20px';
+                            let windDirection = getWindDirection(this.sensor_data1[i]);
+                            h4s[i].innerHTML = windDirection;
+                            h4s[i].style.display = 'block'; // 确保 h4 显示出来
+                            h4s[i].style.top = '60px'; // 确保 h4 显示出来
+
+                        }
+                        // 风速
+                        if (i == 1) {
+                            console.log(h3s[i])
+                            if (this.sensor_data1[i] >= 0 && this.sensor_data1[i] < 5.4) h3s[i].style.color = 'rgba(0, 190, 0, 0.7)'
+                            else if (this.sensor_data1[i] >= 5.4 && this.sensor_data1[i] < 10.7) h3s[i].style.color = 'rgba(255, 240, 0, 0.7)'
+                            else if (this.sensor_data1[i] >= 10.7 && this.sensor_data1[i] < 13.8) h3s[i].style.color = 'rgba(255, 130, 0, 0.7)'
+                            else if (this.sensor_data1[i] >= 13.8) h3s[i].style.color = 'rgba(255, 0, 0, 0.7)'
+                        }
+                        // 微小颗粒物pm1
+                        if (i == 2) {
+                            console.log(h3s[i])
+                            if (this.sensor_data1[i] >= 0 && this.sensor_data1[i] < 25) h3s[i].style.color = 'rgba(0, 190, 0, 0.7)'
+                            else if (this.sensor_data1[i] >= 25 && this.sensor_data1[i] < 1000) h3s[i].style.color = 'rgba(255, 0, 0, 0.7)'
+                        }
+                        //雨量
+                        if (i == 3) {
+                            console.log(h3s[i])
+                            if (this.sensor_data1[i] >= 0 && this.sensor_data1[i] <= 25) h3s[i].style.color = 'rgba(0, 190, 0, 0.7)'
+                            else if (this.sensor_data1[i] > 25 && this.sensor_data1[i] <= 100) h3s[i].style.color = 'rgba(255, 240, 0, 0.7)'
+                            else if (this.sensor_data1[i] > 100) h3s[i].style.color = 'rgba(255, 0, 0, 0.7)'
+                        }
+                        //光照
+                        if (i == 4) {
+                            console.log(h3s[i])
+                            if (this.sensor_data1[i] >= 0 && this.sensor_data1[i] <= 100) h3s[i].style.color = 'rgba(0, 190, 0, 0.7)'
+                            else if (this.sensor_data1[i] > 100 && this.sensor_data1[i] <= 1000) h3s[i].style.color = 'rgba(255, 240, 0, 0.7)'
+                            else if (this.sensor_data1[i] > 1000) h3s[i].style.color = 'rgba(255, 0, 0, 0.7)'
+                        }
+                        //细颗粒物PM2.5
+                        if (i == 5) {
+                            console.log(h3s[i])
+                            if (this.sensor_data1[i] >= 0 && this.sensor_data1[i] < 35) h3s[i].style.color = 'rgba(0, 190, 0, 0.7)'
+                            else if (this.sensor_data1[i] >= 35 && this.sensor_data1[i] < 75) h3s[i].style.color = 'rgba(255, 240, 0, 0.7)'
+                            else if (this.sensor_data1[i] >= 75 && this.sensor_data1[i] < 115) h3s[i].style.color = 'rgba(255, 130, 0, 0.7)'
+                            else if (this.sensor_data1[i] >= 115 && this.sensor_data1[i] < 150) h3s[i].style.color = 'rgba(255, 0, 0, 0.7)'
+                            else if (this.sensor_data1[i] >= 150 && this.sensor_data1[i] < 250) h3s[i].style.color = 'rgba(165, 15, 75, 0.7)'
+                            else if (this.sensor_data1[i] >= 250 && this.sensor_data1[i] < 500) h3s[i].style.color = 'rgba(135, 15, 35, 0.7)'
+                        }
+                        //气压
+                        if (i == 6) {
+                            console.log(h3s[i])
+                        }
+
+                        //噪声
+                        if (i == 7) {
+                            console.log(h3s[i])
+                            if (this.sensor_data1[i] >= 0 && this.sensor_data1[i] <= 30) h3s[i].style.color = 'rgba(0, 190, 0, 0.7)'
+                            else if (this.sensor_data1[i] > 30 && this.sensor_data1[i] <= 60) h3s[i].style.color = 'rgba(255, 240, 0, 0.7)'
+                            else if (this.sensor_data1[i] > 60) h3s[i].style.color = 'rgba(255, 0, 0, 0.7)'
+                        }
+                        //可吸入颗粒物PM10
+                        if (i == 8) {
+                            console.log(h3s[i])
+                            if (this.sensor_data1[i] >= 0 && this.sensor_data1[i] < 50) h3s[i].style.color = 'rgba(0, 190, 0, 0.7)'
+                            else if (this.sensor_data1[i] >= 50 && this.sensor_data1[i] < 150) h3s[i].style.color = 'rgba(255, 240, 0, 0.7)'
+                            else if (this.sensor_data1[i] >= 150 && this.sensor_data1[i] < 250) h3s[i].style.color = 'rgba(255, 130, 0, 0.7)'
+                            else if (this.sensor_data1[i] >= 250 && this.sensor_data1[i] < 350) h3s[i].style.color = 'rgba(255, 0, 0, 0.7)'
+                            else if (this.sensor_data1[i] >= 350 && this.sensor_data1[i] < 420) h3s[i].style.color = 'rgba(165, 15, 75, 0.7)'
+                            else if (this.sensor_data1[i] >= 420 && this.sensor_data1[i] < 600) h3s[i].style.color = 'rgba(135, 15, 35, 0.7)'
+                        }
+                        //气温
+                        if (i == 9) {
+                            console.log(h3s[i])
+                            if (this.sensor_data1[i] >= 0 && this.sensor_data1[i] < 25) h3s[i].style.color = 'rgba(0, 190, 0, 0.7)'
+                            else if (this.sensor_data1[i] >= 25 && this.sensor_data1[i] < 30) h3s[i].style.color = 'rgba(255, 240, 0, 0.7)'
+                            else if (this.sensor_data1[i] >= 30 && this.sensor_data1[i] < 35) h3s[i].style.color = 'rgba(255, 130, 0, 0.7)'
+                            else if (this.sensor_data1[i] >= 35 && this.sensor_data1[i] < 100) h3s[i].style.color = 'rgba(255, 0, 0, 0.7)'
+                        }
+                        //湿度
+                        if (i == 10) {
+                            console.log(h3s[i])
+                            // if (this.sensor_data1[i] == -1) h4s[i].style.display = 'none', h3s[i].style.position = 'relative', h3s[i].style.top = '20px'
+                            // else h3s[i].style.color = 'rgba(0, 190, 0, 0.7)', h4s[i].style.display = 'none', h3s[i].style.position = 'relative', h3s[i].style.top = '20px'
+                        }
+                        //二氧化碳
+                        if (i == 11) {
+                            console.log(h3s[i])
+                            h2s[i].innerHTML = `CO<sub>2</sub><span>${this.objList[i].name}</span>`
+                            if (this.sensor_data1[i] >= 0 && this.sensor_data1[i] < 600) h3s[i].style.color = 'rgba(0, 190, 0, 0.7)'
+                            else if (this.sensor_data1[i] >= 600 && this.sensor_data1[i] < 1000) h3s[i].style.color = 'rgba(255, 240, 0, 0.7)'
+                            else if (this.sensor_data1[i] >= 1000 && this.sensor_data1[i] < 2000) h3s[i].style.color = 'rgba(255, 130, 0, 0.7)'
+                            else if (this.sensor_data1[i] >= 2000 && this.sensor_data1[i] < 10000) h3s[i].style.color = 'rgba(255, 0, 0, 0.7)'
+                        }
+                    }
+                },
+
                 InitHtml: function () {
                     data_json = {};
                     data_json['flag'] = '0';
@@ -848,15 +958,21 @@
                     } else if (flag == "0") {
                         this.InitTasks(data);
                     }
+                    this.levelColor();
+                    this.levelColor1();
                 },
                 InitTasks: function (data) {  //初始化所有的任务
                     //console.log(data.sensor);
                     //data.sensor[6] = 20.9;
                     this.sensor_data = data.sensor;
+                    this.sensor_data1 = data.sensor1;
+                    this.state_data = data.state;
                     // this.main_data = data.main;
                 },
                 UpdateSensor: function (data) {  //更新传感器
-                    this.sensor_data = data;
+                    this.sensor_data = data.sensor;
+                    this.sensor_data1 = data.sensor1;
+                    this.state_data = data.state;
                 },
                 UpdateMainBlock: function (data) {  //更新主界面
                     this.main_data = data;
@@ -872,13 +988,16 @@
 
 
         vm.InitHtml();
-        window.setInterval(vm.GetJson, 5000, "0");  //传感器5s更新一次
+        vm.levelColor()
+        vm.levelColor1()
+        window.setInterval(vm.GetJson, 3000, "0");  //传感器3s更新一次
+
 
 
     </script>
     <!-- 大气数据获取部分 -->
     <script>
-        var vm = new Vue({
+        var vm1 = new Vue({
             el: "#mainbox1",
             data: {
                 arr1: [0, 1, 2],
@@ -890,7 +1009,7 @@
                 title_aqi: ["优", "良", "轻度污染", "中度污染", "重度污染", "严重污染"],
                 title: ["pm2.5", 'pm10', 'SO2', 'CO', 'NO2', "O3", "O2", "CO2", "CH4", "H2S", "湿度", "温度"],
                 std2: ["<25", "<75", "<150", "<1000", "<4", "<200", "<150", "<80", "<70", "<10", "<12500", "常温25"],
-                unit2: ["μg/m", "μg/m", "μg/m", "ppm", "mg/m", "μg/m", "ug/m", "ug/m", "RH", "ppm", "ppm", "°C"],
+                unit2: ["μg/m", "μg/m", "μg/m", "ppm", "mg/m", "μg/m", "ug/m", "ug/m", "%RH", "ppm", "ppm", "°C"],
                 sensor_data: [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
                 main_data: ["优", "", "", "", ""],
                 dict: {
@@ -906,7 +1025,7 @@
                 InitHtml: function () {
                     data_json = {};
                     data_json['flag'] = '0';
-                    axios.post("/update",
+                    axios.post("/update1",
                         data_json).then(function (response) {
                             //console.log(response.data)
                             //that.StartTask("0", response.data);
@@ -920,7 +1039,7 @@
                     data_json = {};
                     // console.log(this);
                     data_json['flag'] = flag;
-                    axios.post("/update",
+                    axios.post("/update1",
                         data_json).then(function (response) {
                             //console.log(response.data);
                             that.StartTask(flag, response.data);
@@ -966,8 +1085,8 @@
         })
 
 
-        vm.InitHtml();
-        window.setInterval(vm.GetJson, 5000, "0");  //传感器5s更新一次
+        vm1.InitHtml();
+        window.setInterval(vm1.GetJson, 5000, "0");  //传感器5s更新一次
 
 
     </script>

@@ -9,25 +9,49 @@ class DataMysql(Mysql):
     '''初始化'''
     def __init__(self):
         super(DataMysql, self).__init__()
-        self.hours_columns = ['TIME','dissolved_od_y','nh3n_y','pm25_y','Cd_y','bg_algae_y','pm10_y','conductivity_y','Cu_y','co2_y','chlorophyll_y','WATER_TEMPER_y','WATER_DEPTH_y','pm1_n','pm25_n','pm10_n','co2_n','co_n','o3_n','so2_n','no2_n','humid_n','h2s_n','ch4_n','temper_n']
+        self.hours_columns = ['TIME','dissolved_od_y','nh3n_y','Cd_y','bg_algae_y','conductivity_y','Cu_y','chlorophyll_y','TDS','COD','turbidity','WATER_TEMPER_y','WATER_DEPTH_y','wind_direction','wind_speed','ship_pm1','rainfall','illumination','ship_pm25',
+                   'air_pressure','noise','ship_pm10','air_temper','ship_humid','ship_co2','pm1_n','pm25_n','pm10_n','co2_n','co_n','o3_n','so2_n','no2_n','humid_n','h2s_n','ch4_n','temper_n','ship_state']
 
-
-    '''读取hours_all的云阳水质数据'''
+    '''读取hours_all_update的云阳水质数据'''
     def FindMaxData(self):
-        sql = "SELECT * FROM hours_all ORDER BY id DESC LIMIT 1;"
+        sql = "SELECT * FROM hours_all_update ORDER BY id DESC LIMIT 1;"
         self.SqlExecute(sql)
-        # print(self.SqlExecute(sql))
         if None == self.cursor:
             return [-1 for i in range(len(self.hours_columns)-1)]
         data=self.cursor.fetchone()
         self.Close()
         if None == data:
             return [-1 for i in range(len(self.hours_columns)-1)]
-        return list(data[2:14])
+        return (list(data[2:26])+list(data[38:]))
+    # '''读取hours_all_update的云阳水质数据'''
+    # def FindMaxData(self):
+    #     sql = "SELECT * FROM hours_all_update ORDER BY id DESC LIMIT 1;"
+    #     self.SqlExecute(sql)
+    #     # print(self.SqlExecute(sql))
+    #     if None == self.cursor:
+    #         return [-1 for i in range(len(self.hours_columns)-1)]
+    #     data=self.cursor.fetchone()
+    #     self.Close()
+    #     if None == data:
+    #         return [-1 for i in range(len(self.hours_columns)-1)]
+    #     return list(data[2:14])
     
-        '''读取hours_all的大气数据（南山片区）'''
+    #     '''读取hours_all_update的云阳气象数据'''
+    # def FindMaxData1(self):
+    #     sql = "SELECT * FROM hours_all_update ORDER BY id DESC LIMIT 1;"
+    #     self.SqlExecute(sql)
+    #     # print(self.SqlExecute(sql))
+    #     if None == self.cursor:
+    #         return [-1 for i in range(len(self.hours_columns)-1)]
+    #     data=self.cursor.fetchone()
+    #     self.Close()
+    #     if None == data:
+    #         return [-1 for i in range(len(self.hours_columns)-1)]
+    #     return list(data[14:26])
+    
+        '''读取hours_all——update的大气数据（南山片区）'''
     def FindMaxData2(self):
-        sql = "SELECT * FROM hours_all ORDER BY id DESC LIMIT 1;"
+        sql = "SELECT * FROM hours_all_update ORDER BY id DESC LIMIT 1;"
         self.SqlExecute(sql)
         # print(self.SqlExecute(sql))
         if None == self.cursor:
@@ -36,8 +60,19 @@ class DataMysql(Mysql):
         self.Close()
         if None == data:
             return [-1 for i in range(len(self.hours_columns)-1)]
-        return list(data[14:])
-
+        return list(data[26:38])
+        '''读取hours_all——update的9001船状态数据'''
+    # def FindMaxData3(self):
+    #     sql = "SELECT * FROM hours_all_update ORDER BY id DESC LIMIT 1;"
+    #     self.SqlExecute(sql)
+    #     # print(self.SqlExecute(sql))
+    #     if None == self.cursor:
+    #         return [-1 for i in range(len(self.hours_columns)-1)]
+    #     data=self.cursor.fetchone()
+    #     self.Close()
+    #     if None == data:
+    #         return [-1 for i in range(len(self.hours_columns)-1)]
+    #     return list(data[38:])
     '''提取主界面'''
     def FindMainData(self):
         res = []

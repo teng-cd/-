@@ -94,54 +94,88 @@
 
 
 (function () {
-    var imgs = ["static/images/img_2.png"];
-    var len = imgs.length;
     var div2 = document.getElementById('protect1');
     var div3 = document.getElementById('protect2');
     var div4 = document.getElementById('protect3');
     var div5 = document.getElementById('protect4');
     var div6 = document.getElementById('protect31');
+    var boss = document.getElementById('box');
+    var boss1 = document.getElementById('box1');
     var qiehuan = 0;
     var time_num = 14000;
+    var isPaused = false;
+    var swapTime = 7000;
+    //根据div可见状态改变盒子位置
+    function checkAndSwap() {
+        var bossComputedStyle = window.getComputedStyle(boss);
+        var boss1ComputedStyle = window.getComputedStyle(boss1);
+        if (div3.style.visibility === 'visible') {
 
-    function update_kepu() {
-        if (qiehuan === 0) {
-            div2.style.visibility = 'visible';
-            div3.style.visibility = 'hidden';
-            div4.style.visibility = 'hidden';
-            div5.style.visibility = 'hidden';
-            div6.style.visibility = 'hidden';
-            qiehuan = 1;
-        } else if (qiehuan === 1) {
-            div2.style.visibility = 'hidden';
-            div3.style.visibility = 'visible';
-            div4.style.visibility = 'hidden';
-            div5.style.visibility = 'hidden';
-            div6.style.visibility = 'hidden';
-            qiehuan = 2;
-        } else if (qiehuan === 2) {
-            div2.style.visibility = 'hidden';
-            div3.style.visibility = 'hidden';
-            div4.style.visibility = 'hidden';
-            div5.style.visibility = 'hidden';
-            div6.style.visibility = 'visible';
-            qiehuan = 3;
-        } else if (qiehuan === 3) {
-            div2.style.visibility = 'hidden';
-            div3.style.visibility = 'hidden';
-            div4.style.visibility = 'visible';
-            div5.style.visibility = 'hidden';
-            div6.style.visibility = 'hidden';
-            qiehuan = 4;
-        } else if (qiehuan === 4) {
-            div2.style.visibility = 'hidden';
-            div3.style.visibility = 'hidden';
-            div4.style.visibility = 'hidden';
-            div5.style.visibility = 'visible';
-            div6.style.visibility = 'hidden';
-            qiehuan = 0;
+            setTimeout(function () {
+                if (div3.style.visibility === 'visible') {
+                    boss.style.top = "220%";
+                    boss1.style.top = "0";
+                }
+            }, swapTime);
+        } else {
+            // swapPositions();
+            boss.style.top = "0";
+            boss1.style.top = "220%";
         }
     }
+    function update_kepu() {
+        if (!isPaused) {
+            if (qiehuan === 0) {
+                div2.style.visibility = 'visible';
+                div3.style.visibility = 'hidden';
+                div4.style.visibility = 'hidden';
+                div5.style.visibility = 'hidden';
+                div6.style.visibility = 'hidden';
+                qiehuan = 1;
+            } else if (qiehuan === 1) {
+                div2.style.visibility = 'hidden';
+                div3.style.visibility = 'visible';
+                div4.style.visibility = 'hidden';
+                div5.style.visibility = 'hidden';
+                div6.style.visibility = 'hidden';
+                qiehuan = 2;
+            } else if (qiehuan === 2) {
+                div2.style.visibility = 'hidden';
+                div3.style.visibility = 'hidden';
+                div4.style.visibility = 'hidden';
+                div5.style.visibility = 'hidden';
+                div6.style.visibility = 'visible';
+                qiehuan = 3;
+            } else if (qiehuan === 3) {
+                div2.style.visibility = 'hidden';
+                div3.style.visibility = 'hidden';
+                div4.style.visibility = 'visible';
+                div5.style.visibility = 'hidden';
+                div6.style.visibility = 'hidden';
+                qiehuan = 4;
+            } else if (qiehuan === 4) {
+                div2.style.visibility = 'hidden';
+                div3.style.visibility = 'hidden';
+                div4.style.visibility = 'hidden';
+                div5.style.visibility = 'visible';
+                div6.style.visibility = 'hidden';
+                qiehuan = 0;
+            }
+            checkAndSwap();
+        }
+    }
+
+
+    function togglePause() {
+        isPaused = !isPaused;
+    }
+
+    // 添加空格键的按下事件监听器
+    window.addEventListener('keydown', function (event) {
+        if (event.code === 'Space') {
+            togglePause();
+        }
+    });
 
     window.setInterval(update_kepu, time_num);
 })();
